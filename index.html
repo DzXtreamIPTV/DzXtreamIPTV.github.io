@@ -1,56 +1,150 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Dz Xtream IPTV</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dz Xtream IPTV</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" />
-  <link rel="stylesheet" href="style.css" />
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<body>
-  <header class="section">
-    <div class="container">
-      <h1 class="title">
-        PasteBin for Text
-      </h1>
-      <p class="subtitle">
-        A simple NGINX+LUA based pastebin service
-      </p>
+    <link rel="icon" type="image/png" href="sptpb-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="sptpb-128.png" sizes="128x128" />
+    <link rel="icon" type="image/png" href="sptpb-512.png" sizes="512x512" />
+
+    <link href="//d34zelngniy2d8.cloudfront.net/static/css/pbs.css" type="text/css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet">
+    <link id="index-style-link" href="index.css" type="text/css" rel="stylesheet">
+
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+
+    <script id="index-script" src="index.js"></script>
+
+    <style id="index-style"></style>
+  </head>
+  <body>
+    <div id="stash" class="hidden" aria-hidden="true">
+      <div class="alert alert-dismissible alert-info fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
     </div>
-  </header>
-  <main class="section">
+
+    <div class="navbar-fixed-top">
+      <div class="progress hidden">
+        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+
     <div class="container">
-      <form method="POST" action="/api/pastes" id="form-paste">
-        <div class="field">
-          <div class="control">
-            <textarea id="content" class="textarea" placeholder="enter text here" rows="10"></textarea>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="text-center">
+            <h1 class="page-header"><a target="_self">spb</a></h1>
+            <h3>the only secure pastebin</h3>
+            <p class="lead small">
+              <a href="about.html">about</a> &bull;
+              <a href="//github.com/syntactician/spb">open source</a> &bull;
+              built atop <a href="//ptpb.pw">ptpb.pw</a>
+            </p>
           </div>
         </div>
-        <div class="field">
-          <div class="control">
-            <button class="button" type="submit" id="submit-btn">Create Paste</button>
-            <input type="text" class="input is-inline is-invisible" readonly id="url" onclick="this.select()" />
+      </div>
+      <form id="paste-form" enctype="multipart/form-data" method="POST" action="/">
+        <div class="row">
+          <div id="alert-col" class="col-sm-12">
+
+          </div>
+          <div class="col-sm-12 form-group">
+            <textarea id="content" name="content" class="form-control paste-content" autofocus="autofocus"></textarea>
           </div>
         </div>
-        <div class="notification is-invisible" id="notification">
-          <p class="has-text-dark">Pastes are deleted after 24hrs.</p>
+
+        <div class="row">
+          <div class="col-xs-9 col-md-6">
+            <div class="form-group">
+              <div class="input-group">
+                <input id="password" type="password" class="form-control" placeholder="password" disabled="disabled">
+                <div class="input-group-btn">
+                  <button id="paste" type="submit" class="btn btn-primary btn-block invert-disable disabled" data-method="post" disabled="disabled">
+                    Paste
+                    <span class="fa fa-spin fa-spinner hidden"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="sunset" class="sr-only">Expires</label>
+              <div class="input-group" id="sunset">
+                <input type="text" class="form-control api-input" id="datetime" name="sunset" placeholder="Expires">
+                <input type="text" class="form-control api-input hidden ignore-disable" name="sunset" placeholder="Expires (seconds)" disabled="disabled">
+                <span id="swap" class="input-group-addon">
+                  <span class="fa fa-calendar"></span>
+                  <span class="fa fa-clock-o hidden"></span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-3 col-md-2 col-md-offset-4 text-right">
+            <div class="form-group">
+              <div class="btn-group btn-block">
+                <input id="private" name="private" class="api-input invert-meaning hidden" type="checkbox" data-payload="1" value="1">
+                <label for="private" class="btn btn-default btn-block" data-toggle="tooltip" data-placement="top" title="Short URLs are nice but easier to guess.">Short</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <button id="clear" type="reset" class="btn btn-default btn-block">Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" id="pasteid" class="form-control" placeholder="paste ID" disabled="disabled">
+                <div class="input-group-btn">
+                  <button id="load" type="submit" class="btn btn-default" data-uri="#pasteid" disabled="disabled">Load
+                    <span class="fa fa-spin fa-spinner hidden"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" id="uuid" class="form-control" placeholder="paste UUID" disabled="disabled">
+                <div class="input-group-btn">
+                  <button id="update" type="submit" class="btn btn-default" data-uri="#uuid" data-method="put" disabled="disabled">
+                    Update
+                    <span class="fa fa-spin fa-spinner hidden"></span>
+                  </button>
+                </div>
+                <div class="input-group-btn">
+                  <button id="delete" type="submit" class="btn btn-default" data-uri="#uuid" data-method="delete" disabled="disabled">
+                    Delete
+                    <span class="fa fa-spin fa-spinner hidden"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
-  </main>
-  <footer class="footer has-text-dark">
-    <div class="content has-text-centered">
-      <p>
-        A demo NGINX + LUA based pastebin by
-        <a class="has-text-dark" href="https://usamaejaz.com">Usama Ejaz</a> | Source Code on
-        <a class="has-text-dark" href="https://github.com/usamaejaz/nginx-pastebin">GitHub</a>
-      </p>
-    </div>
-  </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="./assets/site.js"></script>
-</body>
 
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted text-center small">Send all complaints to <a href="//github.com/syntactician/spb/issues" target="_blank">syntactician & qguv</a></p>
+      </div>
+    </footer>
+  </body>
 </html>
