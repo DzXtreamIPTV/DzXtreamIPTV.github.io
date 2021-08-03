@@ -64,7 +64,7 @@ func main() {
 	go manageStore(req, resp)
 
 	http.HandleFunc("/", makeHandler(req, resp))
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(" ", nil)
 	if err != nil {
 		log.Panic(err)
 	}
