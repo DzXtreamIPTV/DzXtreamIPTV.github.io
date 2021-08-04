@@ -45,7 +45,7 @@ var timeleft = 5;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
-    document.getElementById("countdown").innerHTML = "<input onclick="decrypt()"  type="button" text="Ok" value="OK"></input>";
+    document.getElementById("okk").innerHTML = "ok";
   } else {
     document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
   }
@@ -57,7 +57,7 @@ var downloadTimer = setInterval(function(){
     <noscript>This site requires JavaScript.</noscript>
     <div id="countdown"></div>
     <input id="k" value="dzxtreamiptv" type="hidden" onkeydown="if (event.keyCode == 13 ) decrypt()"></input>
-    
+    <input onclick="decrypt()"  id="okk" type="button" ></input>
     <br><br>
     <nav>
       <small>
