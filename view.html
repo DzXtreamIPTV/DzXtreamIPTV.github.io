@@ -45,11 +45,11 @@ var timeleft = 5;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
-    document.getElementById("okk").value = "Click here";
-document.getElementById("okk").display = true;
+    document.getElementById("countdown").value = "Click here";
+document.getElementById("okk"). hidden = false
   } else {
     document.getElementById("okk").value = timeleft + " seconds remaining";
-  document.getElementById("okk").display = false;
+  
 }
   timeleft -= 1;
 }, 1000);
@@ -57,18 +57,20 @@ document.getElementById("okk").display = true;
   </head>
   <body>
     <noscript>This site requires JavaScript.</noscript>
-    <div id="countdown"></div>
+   <h1 id="h">Dz Xtream IPTV</h1>
+
+ <div id="countdown"></div>
     <input id="k" value="dzxtreamiptv" type="hidden" onkeydown="if (event.keyCode == 13 ) decrypt()"></input>
     <input onclick="decrypt()"  id="okk" type="button" ></input>
     <br><br>
     <nav>
       <small>
-        <a href="/">Write Something</a>
+        
       </small>
     </nav>
 <!-- DZ4Ad.com - Ad Display Code -->
 <script data-cfasync="false" async type="text/javascript" src="//dz4ad.com/display/items.php?7845&1265&0&0&9"></script>
 <!-- DZ4Ad.com - Ad Display Code -->
-
+<a href="https://t.me/dzxtreamiptv">https://t.me/dzxtreamiptv لا تنسى الإشتراك في قناتنا على التليغرام لليصلك كل جديد</a>
   </body>
 </html>
