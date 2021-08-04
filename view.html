@@ -45,10 +45,10 @@ var timeleft = 5;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
-    document.getElementById("countdown").innerHTML = "";
-document.getElementById("okk").visibility = true;
+    document.getElementById("okk").innerHTML = "OK";
+document.getElementById("okk").display = true;
   } else {
-    document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+    document.getElementById("okk").innerHTML = timeleft + " seconds remaining";
   }
   timeleft -= 1;
 }, 1000);
@@ -58,7 +58,7 @@ document.getElementById("okk").visibility = true;
     <noscript>This site requires JavaScript.</noscript>
     <div id="countdown"></div>
     <input id="k" value="dzxtreamiptv" type="hidden" onkeydown="if (event.keyCode == 13 ) decrypt()"></input>
-    <input onclick="decrypt()"  id="okk" type="button" value="OK"></input>
+    <input onclick="decrypt()"  id="okk" type="button" ></input>
     <br><br>
     <nav>
       <small>
