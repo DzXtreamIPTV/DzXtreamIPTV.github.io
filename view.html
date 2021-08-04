@@ -46,9 +46,9 @@ var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
     document.getElementById("countdown").value = "Click here";
-document.getElementById("okk"). hidden = false
+document.getElementById("okk").hidden = false
   } else {
-    document.getElementById("okk").value = timeleft + " seconds remaining";
+    document.getElementById("countdown").value = timeleft + " seconds remaining";
   
 }
   timeleft -= 1;
