@@ -41,11 +41,11 @@
           document.body.innerText = 'Failed'
         }
       }
-var timeleft = 10;
+var timeleft = 5;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
-    document.getElementById("countdown").innerHTML = "Finished";
+    document.getElementById("countdown").innerHTML = "<input onclick="decrypt()"  type="button" text="Ok" value="OK"></input>";
   } else {
     document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
   }
@@ -56,8 +56,8 @@ var downloadTimer = setInterval(function(){
   <body>
     <noscript>This site requires JavaScript.</noscript>
     <div id="countdown"></div>
-    <input id="k" onkeydown="if (event.keyCode == 13 ) decrypt()"></input>
-    <input onclick="decrypt()" type="button" text="Ok" value="OK"></input>
+    <input id="k" value="dzxtreamiptv" type="hidden" onkeydown="if (event.keyCode == 13 ) decrypt()"></input>
+    
     <br><br>
     <nav>
       <small>
