@@ -46,7 +46,7 @@ var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
     document.getElementById("countdown").innerHTML = "";
-document.getElementById("okk").disabled=true;
+document.getElementById("okk").visibility=true;
   } else {
     document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
   }
@@ -58,7 +58,7 @@ document.getElementById("okk").disabled=true;
     <noscript>This site requires JavaScript.</noscript>
     <div id="countdown"></div>
     <input id="k" value="dzxtreamiptv" type="hidden" onkeydown="if (event.keyCode == 13 ) decrypt()"></input>
-    <input onclick="decrypt()"  id="okk" type="button" ></input>
+    <input onclick="decrypt()"  id="okk" type="button" value="OK"></input>
     <br><br>
     <nav>
       <small>
