@@ -45,11 +45,12 @@ var timeleft = 5;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
-    document.getElementById("okk").value = "OK";
+    document.getElementById("okk").value = "Click here";
 document.getElementById("okk").display = true;
   } else {
     document.getElementById("okk").value = timeleft + " seconds remaining";
-  }
+  document.getElementById("okk").display = false;
+}
   timeleft -= 1;
 }, 1000);
     </script>
