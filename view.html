@@ -45,7 +45,8 @@ var timeleft = 5;
 var downloadTimer = setInterval(function(){
   if(timeleft <= 0){
     clearInterval(downloadTimer);
-    document.getElementById("okk").innerHTML = "ok";
+    document.getElementById("countdown").innerHTML = "";
+document.getElementById("okk").disabled=true;
   } else {
     document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
   }
